@@ -124,7 +124,7 @@ public class MainActivity extends Activity {
 			SocketStation.connfdData = new Socket();
 			Log.e("Socket", "85");
 
-			len = SocketStation.client_name.length();
+
 			int[] len_pre = new int[4];
 			for (int i = 0; i < 4; i++) {
 				len_pre[i] = in_boards.read();

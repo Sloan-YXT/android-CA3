@@ -4,7 +4,9 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.net.InetAddress;
 import java.net.Socket;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,11 +31,23 @@ public class SocketStation {
         data[3] = (byte)((a)&0xff);
         return data;
     }
+    static
+    {
+        try {
+            LocalDateTime now = LocalDateTime.now();
+            client_name = "anonymous "+now.toString();
+        }
+        catch (Exception e)
+        {
+            Log.e("SocketStation",Log.getStackTraceString(e));
+            System.exit(1);
+        }
+    }
     public static int vCode;
     public static int numWarn = 0;
     public static int LOGIN_SUCCESS = 0,LOGIN_FAILURE=1;
     public static List<Alarm> alarms = new ArrayList<Alarm>();
-    public static String client_name = "yaoxuetao's android";
+    public static String client_name;
 //    public static List<Alarm> arrTmp;//消除卡顿，点一次警告消息拉一次
     public static void  exit()
     {

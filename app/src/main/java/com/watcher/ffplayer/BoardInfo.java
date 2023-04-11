@@ -78,6 +78,7 @@ public class BoardInfo extends Activity {
                     break;
                 case 250:
                     try {
+
                         String data = msg.obj.toString();
                         JSONObject jdata = new JSONObject(data);
                         String temp = jdata.getString("temp");
@@ -89,16 +90,25 @@ public class BoardInfo extends Activity {
                         BoardInfo.this.action.setText("Action:"+action);
                         BoardInfo.this.temp.setText("Temperature:" + temp + "℃");
                         BoardInfo.this.humi.setText("Humidity:" + humi + "%RH");
-                        if (light.equals(Constant.wrongLight)==false) {
-                            Log.e("warn data",Constant.wrongLight);
-
+                        Log.e("BoardInfo","light=="+light);
+                        if(light.equals(Constant.NA))
+                        {
+                            Log.e("BoardInfo","light==NA");
+                            BoardInfo.this.light.setText("No light sensor available");
+                        }
+                        else if(light.equals(Constant.wrongLight)==false) {
+                            Log.e("BoardInfo:!!!!!!",Constant.wrongLight);
                             BoardInfo.this.light.setText("Light:normal");
                         } else {
 
                             BoardInfo.this.light.setText("Light:abnormal");
                         }
-                        if (smoke.equals(Constant.wrongSmoke)==false) {
-                            Log.e("warn data",Constant.wrongSmoke);
+                        if(smoke.equals(Constant.NA))
+                        {
+                            BoardInfo.this.smoke.setText("No smoke sensor available");
+                        }
+                        else if (smoke.equals(Constant.wrongSmoke)==false) {
+                            Log.e("BoardInfo:!!!!!!!!!",Constant.wrongSmoke);
                             BoardInfo.this.smoke.setText("Smoke:normal");
                         } else {
                             BoardInfo.this.smoke.setText("Smoke:abnormal");
