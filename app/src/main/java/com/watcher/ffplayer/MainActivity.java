@@ -86,7 +86,7 @@ public class MainActivity extends Activity {
 					}
 					finish();
 				case 300:
-					Toast.makeText(getApplicationContext(),"server has been shut down,please relogin!",Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(),"connection breakdown,please relogin!",Toast.LENGTH_LONG).show();
 					finish();
 					break;
 				default:

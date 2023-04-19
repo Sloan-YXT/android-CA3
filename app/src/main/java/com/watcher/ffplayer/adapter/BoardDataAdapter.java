@@ -63,7 +63,7 @@ public class BoardDataAdapter extends BaseAdapter {
             vh = (BoardDataAdapter.ViewHolder) convertView.getTag();
         }
         BoardData item = itemList.get(position);
-        vh.boardDataTitle.setText("Node"+item.boardName+":"+position);
+        vh.boardDataTitle.setText("Node "+item.boardName+":"+position);
         vh.boardDataLocation.setText("location:"+item.boardLocation);
         vh.boardDataTime.setText("captured at:"+item.month+"//"+item.date+"//"+item.year+"//"+","+item.weekDay+" "+item.time);
         if(item.action.equals("NA"))

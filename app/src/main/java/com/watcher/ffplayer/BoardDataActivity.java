@@ -69,7 +69,7 @@ public class BoardDataActivity extends Activity {
                     finish();
                     break;
                 case 500:
-                    Toast.makeText(BoardDataActivity.this,"server shutdown!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BoardDataActivity.this,"connection breakdown!",Toast.LENGTH_SHORT).show();
                     try {
                         Thread.sleep(3000);
                     }

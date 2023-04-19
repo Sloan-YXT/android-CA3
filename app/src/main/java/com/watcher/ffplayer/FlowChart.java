@@ -73,6 +73,7 @@ public class FlowChart extends Activity {
                     action_info.put("stationary",0f);
                     action_info.put("walking",0f);
                     action_info.put("running",0f);
+                    boolean action_na = boardData.get(0).action.equals("NA");
                     for(int i=0;i<boardData.size();i++)
                     {
                         String action = boardData.get(i).action;
@@ -105,17 +106,41 @@ public class FlowChart extends Activity {
                     temp_chart.invalidate();
                     humi_chart.invalidate();
                     List<BarEntry> action_bar_data = new ArrayList<>();
-                    action_bar_data.add(new BarEntry(0,action_info.get("stationary")));
-                    action_bar_data.add(new BarEntry(1,action_info.get("walking")));
-                    action_bar_data.add(new BarEntry(2,action_info.get("running")));
-                    xAxis  = action_chart_bar.getXAxis();
-                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                    xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"stationary","walking","running"}));
-                    action_chart_bar.getDescription().setEnabled(false);
-                    BarDataSet barDataSet=new BarDataSet(action_bar_data,"action chart in month "+month);
-                    BarData actionBarData=new BarData(barDataSet);
-                    action_chart_bar.setData(actionBarData);
-                    action_chart_bar.invalidate();
+                    if(!action_na) {
+                        action_bar_data.add(new BarEntry(0, action_info.get("stationary")));
+                        action_bar_data.add(new BarEntry(1, action_info.get("walking")));
+                        action_bar_data.add(new BarEntry(2, action_info.get("running")));
+                        xAxis = action_chart_bar.getXAxis();
+                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                        String[] xVal = {"stationary", "walking", "running"};
+                        xAxis.setValueFormatter(new IndexAxisValueFormatter() {
+                            @Override
+                            public String getFormattedValue(float value) {
+                                //if(value%0.5!=0|value<0|value>1)
+                                if (value < 0 | value > 2) {
+                                    return "";
+                                } else {
+                                    if ((int) value < value) {
+                                        return "";
+                                    } else {
+                                        return xVal[(int) value];
+                                    }
+                                }
+
+                            }
+                        });
+                        action_chart_bar.getDescription().setEnabled(false);
+                        BarDataSet barDataSet = new BarDataSet(action_bar_data, "action chart in month " + month);
+                        BarData actionBarData = new BarData(barDataSet);
+                        action_chart_bar.setData(actionBarData);
+                        action_chart_bar.invalidate();
+                    }
+                    else
+                    {
+                        action_chart_bar.setNoDataText("action data not applicable");
+                        action_chart_bar.setNoDataTextColor(Color.GRAY);
+                        action_chart_bar.invalidate();
+                    }
                     List<PieEntry> action_pie_Data = new ArrayList<>();
                     int []colors = new int[3];
                     int pos = 0;
@@ -172,7 +197,7 @@ public class FlowChart extends Activity {
                     break;
 
                 case 500:
-                    Toast.makeText(FlowChart.this,"server shutdown!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FlowChart.this,"connection breakdown!",Toast.LENGTH_SHORT).show();
                     try {
                         Thread.sleep(3000);
                     }
